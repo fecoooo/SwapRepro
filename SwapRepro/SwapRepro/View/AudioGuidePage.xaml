@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="AudioGuideModule.View.AudioGuidePage"
+             xmlns:localization="clr-namespace:AudioGuideModule.Localization"
+             xmlns:local="clr-namespace:AudioGuideModule.View"
+             >
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:InverseBoolConverter x:Key="InverseBoolConverter" />
+            <local:DoubleSecondsToMMSSConverter x:Key="DoubleSecondsToMMSSConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout>
+            <StackLayout VerticalOptions="StartAndExpand" >
+                <ImageButton  AbsoluteLayout.LayoutBounds=".05, 0, 100, 100" AbsoluteLayout.LayoutFlags="PositionProportional" Source="scan.png" Padding="20" WidthRequest="80" HeightRequest="80" 
+                              CornerRadius="40" VerticalOptions="Center" HorizontalOptions ="Center" BackgroundColor="#cea448" Clicked="StartScanQRCode" />
+            </StackLayout>
+
+            <StackLayout Orientation="Vertical" Margin="0, 0, 0, 25" HorizontalOptions="Center" VerticalOptions="End" >
+                <AbsoluteLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                    <ImageButton  AbsoluteLayout.LayoutBounds=".05, 0, 100, 100" AbsoluteLayout.LayoutFlags="PositionProportional" Source="previous.png" Padding="20" WidthRequest="60" HeightRequest="60" 
+                              CornerRadius="30" VerticalOptions="Center" HorizontalOptions ="Center" BackgroundColor="#cea448" Clicked="PreviousTrack"  Margin="10"/>
+
+                    
+                    <ImageButton  AbsoluteLayout.LayoutBounds=".5, 0, 100, 100" AbsoluteLayout.LayoutFlags="PositionProportional" Source="play.png" Padding="20" WidthRequest="80" HeightRequest="80" 
+                              CornerRadius="40" VerticalOptions="Center" HorizontalOptions ="Center" BackgroundColor="#cea448" Clicked="PlayOrPause" Margin="10"  IsVisible="{Binding IsAudioPlaying, Converter={StaticResource InverseBoolConverter}}" />
+                    <ImageButton  AbsoluteLayout.LayoutBounds=".5, 0, 100, 100" AbsoluteLayout.LayoutFlags="PositionProportional" Source="pause.png" Padding="20" WidthRequest="80" HeightRequest="80" 
+                              CornerRadius="40" VerticalOptions="Center" HorizontalOptions ="Center" BackgroundColor="#cea448" Clicked="PlayOrPause" Margin="10"  IsVisible="{Binding IsAudioPlaying}" />
+
+                    
+                    <ImageButton  AbsoluteLayout.LayoutBounds=".95, 0, 100, 100" AbsoluteLayout.LayoutFlags="PositionProportional" Source="next.png" Padding="20" WidthRequest="60" HeightRequest="60" 
+                              CornerRadius="30" VerticalOptions="Center" HorizontalOptions ="Center" BackgroundColor="#cea448" Clicked="NextTrack" Margin="10" />
+                    
+                </AbsoluteLayout>
+
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                    <Label Text="{Binding ScanResult}" FontSize="Medium" VerticalOptions="CenterAndExpand" HorizontalOptions="Center" />
+                </StackLayout>
+
+                <StackLayout Orientation="Horizontal" VerticalOptions="FillAndExpand" HorizontalOptions="Center">
+                    <ImageButton  AbsoluteLayout.LayoutBounds=".95, 0, 100, 100" AbsoluteLayout.LayoutFlags="PositionProportional" Source="fast_backward.png" Padding="3" WidthRequest="30" HeightRequest="30" 
+                              CornerRadius="15" VerticalOptions="Center" HorizontalOptions ="Center" BackgroundColor="#cea448" Clicked="FastBackward" />
+                    
+                    <Slider WidthRequest="250" ThumbColor="#000000" MinimumTrackColor="#000000" MaximumTrackColor="#cea448" Margin="0" x:Name="ProgressSlider" 
+                            DragCompleted="ProgressSlider_DragCompleted" Value="{Binding CurrentAudioPostion}" Maximum="{Binding AudioDuration}" />
+
+                    <ImageButton  AbsoluteLayout.LayoutBounds=".95, 0, 100, 100" AbsoluteLayout.LayoutFlags="PositionProportional" Source="fast_forward.png" Padding="3" WidthRequest="30" HeightRequest="30" 
+                              CornerRadius="15" VerticalOptions="Center" HorizontalOptions ="Center" BackgroundColor="#cea448" Clicked="FastForward" />
+                </StackLayout>
+
+                
+                <StackLayout Orientation="Horizontal" Margin="0,20">
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="Start">
+                        <Label Text="{Binding CurrentAudioPostion, Converter={StaticResource DoubleSecondsToMMSSConverter}}" FontSize="Medium" HorizontalOptions="Start" />
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
+                        <Label Text="{Binding AudioDuration, Converter={StaticResource DoubleSecondsToMMSSConverter}}" FontSize="Medium" HorizontalOptions="End" />
+                    </StackLayout>
+                </StackLayout>
+
+                <StackLayout Orientation="Horizontal" VerticalOptions="FillAndExpand" HorizontalOptions="Fill">
+                    
+                </StackLayout>
+            </StackLayout>
+        </StackLayout>
+        
+    </ContentPage.Content>
+</ContentPage>
